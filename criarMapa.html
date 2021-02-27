@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar mapa</title>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase.js"></script>
+</head>
+
+<body>
+    <div>
+        <h1>Criar mapa</h1>
+        <label for="nome">Nome do mapa: </label> <input type="text" id="nome" style="width: 250px;" /><br><br>
+
+        <label for="tipo">Tipo: </label>
+        <select id="tipo">
+        </select>
+        <br><br>
+
+        <button id="criarMapa">Criar mapa</button>
+    </div>
+    <script src="DB.js"></script>
+    <script>
+        document.getElementById("criarMapa").addEventListener("click", function () {
+            document.getElementById("criarMapa").setAttribute("disabled", true);
+            var nome = document.getElementById("nome").value;
+            var select = document.getElementById("tipo");
+            var tipoDeMapa = select.options[select.selectedIndex].value;
+
+            db.collection('mapas').add({
+                nome: nome,
+                tipoDeMapa: db.doc("/tipoDeMapa/" + tipoDeMapa)
+            }).then(x => window.location.reload());
+        });
+
+        window.onload = () => {
+            db.collection('tipoDeMapa').get().then((tipos) => {
+                tipos.forEach(tipo => {
+                    console.log(tipo.id);
+                    let option = document.createElement("option");
+                    option.setAttribute("value", tipo.id);
+                    option.setAttribute("name", tipo.data().nome);
+                    option.innerHTML = tipo.data().nome;
+                    document.getElementById("tipo").appendChild(option);
+
+                });
+            });
+        };
+    </script>
+</body>
+
+</html>

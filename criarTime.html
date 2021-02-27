@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar time</title>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase.js"></script>
+</head>
+
+<body>
+    <div>
+        <h1>Criar time</h1>
+        <label for="nome">Nome do time: </label> <input type="text" id="nome" style="width: 250px;" /><br><br>
+        <label for="pais">País e origem: </label> <input type="text" id="pais" style="width: 100px;" /><br><br>
+
+        <label for="jogadorUm">Jogador um: </label>
+        <select id="jogadorUm" onchange="selecionarJogador(this)">
+            <option value="blank" name="blank" selected></option>
+        </select>
+        <input hidden id="idJogadorUm">
+        <br><br>
+
+        <label for="jogadorDois">Jogador dois: </label>
+        <select id="jogadorDois" onchange="selecionarJogador(this)">
+            <option value="blank" name="blank" selected></option>
+        </select>
+        <input hidden id="idJogadorDois">
+        <br><br>
+
+        <label for="jogadorTres">Jogador três: </label>
+        <select id="jogadorTres" onchange="selecionarJogador(this)">
+            <option value="blank" name="blank" selected></option>
+        </select>
+        <input hidden id="idJogadorTres">
+        <br><br>
+
+        <label for="jogadorQuatro">Jogador quatro: </label>
+        <select id="jogadorQuatro" onchange="selecionarJogador(this)">
+            <option value="blank" name="blank" selected></option>
+        </select>
+        <input hidden id="idJogadorQuatro">
+        <br><br>
+
+        <label for="jogadorCinco">Jogador cinco: </label>
+        <select id="jogadorCinco" onchange="selecionarJogador(this)">
+            <option value="blank" name="blank" selected></option>
+        </select>
+        <input hidden id="idJogadorCinco">
+        <br><br>
+
+        <button id="criarEquipe">Criar time</button>
+    </div>
+    <script src="DB.js"></script>
+    <script>
+        var dataList = [
+            document.getElementById("jogadorUm"),
+            document.getElementById("jogadorDois"),
+            document.getElementById("jogadorTres"),
+            document.getElementById("jogadorQuatro"),
+            document.getElementById("jogadorCinco")
+        ];
+
+        document.getElementById("criarEquipe").addEventListener("click", function () {
+            document.getElementById("criarEquipe").setAttribute("disabled", true);
+            var nome = document.getElementById("nome").value;
+            var pais = document.getElementById("pais").value;
+
+            var jogadores = {
+                "jogadorUm": "/jogadores/" + document.getElementById("idJogadorUm").value,
+                "jogadorDois": "/jogadores/" + document.getElementById("idJogadorDois").value,
+                "jogadorTres": "/jogadores/" + document.getElementById("idJogadorTres").value,
+                "jogadorQuatro": "/jogadores/" + document.getElementById("idJogadorQuatro").value,
+                "jogadorCinco": "/jogadores/" + document.getElementById("idJogadorCinco").value
+            }
+
+            db.collection("equipes").add({
+                nome: nome,
+                pais: pais,
+                jogadores: {
+                    "jogadorUm": db.doc(jogadores["jogadorUm"]),
+                    "jogadorDois": db.doc(jogadores["jogadorDois"]),
+                    "jogadorTres": db.doc(jogadores["jogadorTres"]),
+                    "jogadorQuatro": db.doc(jogadores["jogadorQuatro"]),
+                    "jogadorCinco": db.doc(jogadores["jogadorCinco"])
+                }
+            });
+
+            // atualiza os status dos jogadores para mostrar que eles fazem parte de uma equipe agora
+            db.doc(jogadores["jogadorUm"]).update({
+                temEquipe: true
+            });
+            db.doc(jogadores["jogadorDois"]).update({
+                temEquipe: true
+            });
+            db.doc(jogadores["jogadorTres"]).update({
+                temEquipe: true
+            });
+            db.doc(jogadores["jogadorQuatro"]).update({
+                temEquipe: true
+            });
+            db.doc(jogadores["jogadorCinco"]).update({
+                temEquipe: true
+            }).then(x => window.location.reload());
+        });
+
+        function selecionarJogador(select) {
+            var input = select.nextElementSibling;
+            var newId = select.options[select.selectedIndex].value;
+            var oldIdValue = input.getAttribute("value");
+            var oldName = input.getAttribute("name")
+            // if (newId != "blank") {
+            if (newId != "blank") {
+                input.setAttribute("value", newId);
+                input.setAttribute("name", select.options[select.selectedIndex].getAttribute("name"));
+            } else {
+                input.setAttribute("value", '');
+                input.setAttribute("name", '');
+            }
+
+            for (let i = 0; i < dataList.length; i++) {
+                if (dataList[i].getAttribute('id') != select.getAttribute('id')) {
+                    if (newId != "blank") {
+                        for (let j = 0; j < dataList[i].options.length; j++) {
+                            if (dataList[i].options[j].value == newId) {
+                                dataList[i].removeChild(dataList[i].options[j]);
+                            }
+                        }
+                    }
+                    if (oldName != null && oldName != undefined && oldName != '') {
+                        let option = document.createElement("option");
+                        option.setAttribute("value", oldIdValue);
+                        option.setAttribute("name", oldName);
+                        option.innerHTML = oldName;
+                        dataList[i].appendChild(option);
+                    }
+                }
+            }
+        }
+
+        window.onload = () => {
+            db.collection('jogadores').where("temEquipe", "==", false).get().then((jogadores) => {
+                jogadores.forEach(jogador => {
+                    for (let i = 0; i < dataList.length; i++) {
+                        let option = document.createElement("option");
+                        option.setAttribute("value", jogador.id);
+                        option.setAttribute("name", jogador.data().nome);
+                        option.innerHTML = jogador.data().nome;
+                        jogador.data().funcao.get().then(x => {
+                            option.innerHTML += ' - ' + x.data().nome
+                            option.setAttribute("name", option.innerHTML);
+                        });
+                        dataList[i].appendChild(option);
+                    }
+                });
+            });
+        };
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar tipo de mapa</title>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase.js"></script>
+</head>
+
+<body>
+    <div>
+        <h1>Criar tipo de mapa</h1>
+        <label for="tipo">Tipo de mapa: </label> <input type="text" id="tipo" style="width: 250px;" /><br><br>
+        <button id="criarTipoDeMapa">Criar função</button>
+    </div>
+    <script src="DB.js"></script>
+    <script>
+        document.getElementById("criarTipoDeMapa").addEventListener("click", function () {
+            var tipo = document.getElementById("tipo").value;
+            document.getElementById("criarTipoDeMapa").setAttribute("disabled", true);
+
+            db.collection('tipoDeMapa').add({
+                nome: tipo,
+            }).then(x => { 
+                window.location.reload();
+             });
+        });
+
+    </script>
+</body>
+
+</html>

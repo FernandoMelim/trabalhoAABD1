@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar partida</title>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase.js"></script>
+</head>
+
+<body>
+    <h1>Criar partida</h1>
+    <label for="timeUm">Time um: </label>
+    <select id="timeUm" onchange="selecionarTime(this)">
+        <option value="blank" name="blank" selected></option>
+    </select>
+    <input hidden id="idTimeUm">
+    <br><br>
+
+    <label for="timeDois">Time dois: </label>
+    <select id="timeDois" onchange="selecionarTime(this)">
+        <option value="blank" name="blank" selected></option>
+    </select>
+    <input hidden id="idTimeDois">
+    <br><br>
+
+    <label for="mapa">Mapa: </label>
+    <select id="mapa">
+        <option value="blank" name="blank" selected></option>
+    </select>
+    <input hidden id="idMapa">
+    <br><br>
+
+    <label for="vencedor">Vencedor: </label>
+    <select id="vencedor">
+        <option value="blank" name="blank" selected></option>
+    </select>
+    <input hidden id="idVencedor">
+    <br><br>
+
+    <label for="placar">Placar(Numero X Numero): </label><input type="text" id="placar" /><br><br>
+    <label for="duracao">Duração(em minutos): </label><input type="number" id="duracao" /><br><br>
+
+    <button id="criarPartida">Criar partida</button>
+
+    <script src="DB.js"></script>
+    <script>
+        document.getElementById("criarPartida").addEventListener("click", function () {
+            document.getElementById("criarPartida").setAttribute("disabled", true);
+            let timeUmSelect = document.getElementById("timeUm");
+            let timeDoisSelect = document.getElementById("timeDois");
+            let mapaSelect = document.getElementById("mapa");
+            let vencedorSelect = document.getElementById("vencedor");
+
+            let timeUm = timeUmSelect.options[timeUmSelect.selectedIndex].value;
+            let timeDois = timeDoisSelect.options[timeDoisSelect.selectedIndex].value;
+            let mapa = mapaSelect.options[mapaSelect.selectedIndex].value;
+            let vencedor = vencedorSelect.options[vencedorSelect.selectedIndex].value;
+            let duracao = document.getElementById("duracao").value;
+            let placar = document.getElementById("placar").value;
+
+            db.collection("partidas").add({
+                equipes: {
+                    timeUm: db.doc("/equipes/" + timeUm),
+                    timeDois: db.doc("/equipes/" + timeDois)
+                },
+                mapa: db.doc("/mapas/" + mapa),
+                vencedor: db.doc("/equipes/" + vencedor),
+                duracao: duracao,
+                placar: placar,
+            }).then(x => window.location.reload());
+        });
+
+        function selecionarTime(select) {
+            var dataList = [
+                document.getElementById("timeUm"),
+                document.getElementById("timeDois")
+            ];
+
+            var input = select.nextElementSibling;
+            var newId = select.options[select.selectedIndex].value;
+            var oldIdValue = input.getAttribute("value");
+            var oldName = input.getAttribute("name");
+
+            if (newId != "blank") {
+                input.setAttribute("value", newId);
+                input.setAttribute("name", select.options[select.selectedIndex].getAttribute("name"));
+            } else {
+                input.setAttribute("value", '');
+                input.setAttribute("name", '');
+            }
+
+            let option = document.createElement("option");
+            option.setAttribute("value", oldIdValue);
+            option.setAttribute("name", oldName);
+            option.innerHTML = oldName;
+
+            for (let i = 0; i < dataList.length; i++) {
+                if (dataList[i].getAttribute('id') != select.getAttribute('id')) {
+                    if (newId != "blank") {
+                        for (let j = 0; j < dataList[i].options.length; j++) {
+                            if (dataList[i].options[j].value == newId) {
+                                dataList[i].removeChild(dataList[i].options[j]);
+                            }
+                        }
+                    }
+                    if (oldName != null && oldName != undefined && oldName != '') {
+                        dataList[i].appendChild(option);
+                    }
+                }
+            }
+            var selected = select.options[select.selectedIndex]
+            var vencedor = document.getElementById('vencedor');
+            for (let i = 0; i < vencedor.options.length; i++) {
+                if (vencedor.options[i].value == oldIdValue)
+                    vencedor.removeChild(vencedor.options[i]);
+            }
+            if (newId != "blank") {
+                let newOption = document.createElement("option");
+                newOption.setAttribute("value", newId);
+                newOption.setAttribute("name", selected.getAttribute("name"));
+                newOption.innerHTML = selected.innerHTML;
+                vencedor.appendChild(newOption);
+            }
+        };
+
+        window.onload = () => {
+            db.collection('equipes').get().then((equipes) => {
+                equipes.forEach(equipe => {
+                    let optionUm = document.createElement("option");
+                    optionUm.setAttribute("value", equipe.id);
+                    optionUm.setAttribute("name", equipe.data().nome);
+                    optionUm.innerHTML = equipe.data().nome + ' - ' + equipe.data().pais;
+                    document.getElementById("timeUm").appendChild(optionUm);
+
+                    let optionDois = document.createElement("option");
+                    optionDois.setAttribute("value", equipe.id);
+                    optionDois.setAttribute("name", equipe.data().nome);
+                    optionDois.innerHTML = equipe.data().nome + ' - ' + equipe.data().pais;
+
+                    document.getElementById("timeUm").appendChild(optionUm);
+                    document.getElementById("timeDois").appendChild(optionDois);
+                });
+            });
+
+            db.collection('mapas').get().then((mapas) => {
+                mapas.forEach(mapa => {
+                    let option = document.createElement("option");
+                    option.setAttribute("value", mapa.id);
+                    option.setAttribute("name", mapa.data().nome);
+                    option.innerHTML = mapa.data().nome;
+                    mapa.data().tipoDeMapa.get().then(x => {
+                        option.innerHTML += ' - ' + x.data().nome
+                    });
+                    document.getElementById("mapa").appendChild(option);
+                });
+            });
+
+        };
+    </script>
+</body>
+
+</html>

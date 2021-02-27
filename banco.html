@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabalho AABD</title>
+</head>
+
+<body>
+
+    <div>
+        <h1>Adicionar dados</h1>
+        <button id="addData">Adiciona dados</button>
+    </div>
+
+    <div>
+        <h1>Busca dados</h1>
+        <button id="buscaData">Busca dados</button>
+    </div>
+
+
+    <div>
+        <h1>Substitui dados</h1>
+        <button id="substitui">Substitui dados</button>
+    </div>
+
+    <div>
+        <h1>Deleta dados</h1>
+        <button id="deleta">Deleta dados</button>
+    </div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyDyFhwo0QCLMgWd0exzNSN0l_OfrTaZnOk",
+            authDomain: "curso-banco-de-dados-8fd6f.firebaseapp.com",
+            databaseURL: "https://curso-banco-de-dados-8fd6f-default-rtdb.firebaseio.com",
+            projectId: "curso-banco-de-dados-8fd6f",
+            storageBucket: "curso-banco-de-dados-8fd6f.appspot.com",
+            messagingSenderId: "1063137830200",
+            appId: "1:1063137830200:web:d9d9334d2e0aeb2b840dcd"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+
+        document.getElementById("addData").addEventListener("click", function () {
+            db.collection("UsuariosAtivos").add({
+                nome: "fernando",
+                last: "Hottum",
+                email: "fernando.lief@hotmail.com",
+                age: 18
+            });
+            db.collection("UsuariosAtivos").add({
+                nome: "fernando",
+                last: "Hottum",
+                email: "fernando.lief@hotmail.com",
+                age: 1
+            });
+            db.collection("UsuariosAtivos").add({
+                nome: "fernando",
+                last: "Hottum",
+                email: "fernando.lief@hotmail.com",
+                age: 43
+            });
+            db.collection("UsuariosAtivos").add({
+                nome: "fernando",
+                last: "Hottum",
+                email: "fernando.lief@hotmail.com",
+                age: 50
+            });
+            db.collection("UsuariosAtivos").add({
+                nome: "fernando",
+                last: "Hottum",
+                email: "fernando.lief@hotmail.com",
+                age: 19
+            });
+
+            db.collection("UsuariosAtivos").add({
+                nome: "joao",
+                last: "aaaa",
+                email: "aaaa.lief@hotmail.com",
+                age: 50
+            });
+
+            db.collection("UsuariosAtivos").add({
+                nome: "maria",
+                last: "maria",
+                email: "maria.lief@hotmail.com",
+                age: 23
+            });
+
+            db.collection("UsuariosAtivos").add({
+                nome: "diogo",
+                last: "aaaa",
+                email: "diogo.lief@hotmail.com",
+                age: 35
+            });
+
+            db.collection("UsuariosAtivos").add({
+                nome: "luiza",
+                last: "za",
+                email: "luiza.lief@hotmail.com",
+                age: 5
+            });
+
+            db.collection("UsuariosAtivos").add({
+                nome: "marcela",
+                last: "melim",
+                email: "marcela.melim@hotmail.com",
+                age: 15
+            });
+
+            db.collection("UsuariosAtivos").doc("set").set({
+                nome: "testeset",
+                last: "set",
+                email: "set@hotmail.com",
+                age: 1
+            });
+        });
+
+
+
+
+        document.getElementById("buscaData").addEventListener("click", function () {
+            // db.collection("UsuariosAtivos").get().then((querySnapshot) => {
+            //     querySnapshot.forEach((doc) => {
+            //         console.log(`${doc.id} => ${doc.data().nome}`);
+            //     });
+            // });
+
+
+            // db.collection("UsuariosAtivos").where("nome", "==", "fernando").get().then((querySnapshot) => {
+            //     querySnapshot.forEach((doc) => {
+            //         console.log(`${doc.id} => ${doc.data().nome}`);
+            //     });
+            // });
+
+
+            // console.log("Fazendo pesquisa ordenada por idade");
+            // db.collection("UsuariosAtivos").where("nome", "==", "fernando").orderBy("age", "asc").get().then((querySnapshot) => {
+            //     querySnapshot.forEach((doc) => {
+            //         console.log(`${doc.id} => ${doc.data().nome} -- ${doc.data().age}`);
+            //     });
+            // });
+
+
+
+            db.collection("UsuariosAtivos").where("nome", "==", "fernando").where("last", '==', 'Hottum').orderBy("age", "asc").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    console.log(`${doc.id} => ${doc.data().nome} -- ${doc.data().age}`);
+                });
+            });
+
+        });
+
+
+        document.getElementById("substitui").addEventListener("click", function () {
+            db.collection("UsuariosAtivos").doc("set").set({
+                nome: "setfalso",
+                last: "setfalse",
+                email: "setfalse@hotmail.com",
+                age: 1
+            })
+        });
+
+        document.getElementById("deleta").addEventListener("click", function () {
+            db.collection("UsuariosAtivos").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    db.collection("UsuariosAtivos").doc(doc.id).delete().then((querySnapshot) => {
+                        console.log(`Documento deletado`);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

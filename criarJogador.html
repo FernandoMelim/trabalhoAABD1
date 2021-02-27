@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar jogador</title>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase.js"></script>
+</head>
+
+<body>
+    <div>
+        <h1>Criar jogador</h1>
+        <label for="nome">Nome completo: </label> <input type="text" id="nome" style="width: 250px;" /><br><br>
+        <label for="idade">Idade: </label> <input type="number" id="idade" style="width: 100px;" /><br><br>
+
+        <label for="funcoes">Função: </label>
+        <select id="funcoes">
+        </select>
+        <br><br>
+
+        <button id="criarJogador">Criar jogador</button>
+    </div>
+    <script src="DB.js"></script>
+    <script>
+        document.getElementById("criarJogador").addEventListener("click", function () {
+            document.getElementById("criarJogador").setAttribute("disabled", true);
+            var nome = document.getElementById("nome").value;
+            var idade = document.getElementById("idade").value;
+
+            var select = document.getElementById("funcoes");
+            var funcao = select.options[select.selectedIndex].value;
+
+            db.collection('jogadores').add({
+                nome: nome,
+                idade: parseInt(idade),
+                funcao: db.doc("/funcao/" + funcao),
+                temEquipe: false
+            }).then(x => window.location.reload());
+
+            // db.collection('jogadores').add({
+            //     nome: "Fernando",
+            //     idade: 23,
+            //     funcao: db.doc("/funcao/qr3Xsg5cM4p45qllBoc3"),
+            //     temEquipe: false
+            // });
+            // db.collection('jogadores').add({
+            //     nome: "Maria",
+            //     idade: 40,
+            //     funcao: db.doc("/funcao/qr3Xsg5cM4p45qllBoc3"),
+            //     temEquipe: false
+            // });
+            // db.collection('jogadores').add({
+            //     nome: "Luiza",
+            //     idade: 18,
+            //     funcao: db.doc('/funcao/qr3Xsg5cM4p45qllBoc3'),
+            //     temEquipe: false
+            // });
+            // db.collection('jogadores').add({
+            //     nome: "José",
+            //     idade: 27,
+            //     funcao: db.doc('/funcao/qr3Xsg5cM4p45qllBoc3'),
+            //     temEquipe: false
+            // });
+            // db.collection('jogadores').add({
+            //     nome: "kami",
+            //     idade: 15,
+            //     funcao: db.doc('/funcao/qr3Xsg5cM4p45qllBoc3'),
+            //     temEquipe: false
+            // });
+            // db.collection('jogadores').add({
+            //     nome: "brtt",
+            //     idade: 16,
+            //     funcao: db.doc('/funcao/jGIwMv6Cgjg7pljCBcDM'),
+            //     temEquipe: false
+            // });
+            // db.collection('jogadores').add({
+            //     nome: "Dana",
+            //     idade: 17,
+            //     funcao: db.doc('/funcao/jGIwMv6Cgjg7pljCBcDM'),
+            //     temEquipe: false
+            // });
+            // db.collection('jogadores').add({
+            //     nome: 'manajj',
+            //     idade: '18',
+            //     funcao: db.doc('/funcao/gVBm00tOy7dxLJbeyeZL'),
+            //     temEquipe: false
+            // });
+            // db.collection('jogadores').add({
+            //     nome: 'mylon',
+            //     idade: 14,
+            //     funcao: db.doc('/funcao/gVBm00tOy7dxLJbeyeZL'),
+            //     temEquipe: false
+            // });
+            // db.collection('jogadores').add({
+            //     nome: 'sirT',
+            //     idade: 14,
+            //     funcao: db.doc('/funcao/IOEyQV72LDsQOTmKB0U0'),
+            //     temEquipe: false
+            // });
+
+            // db.collection('jogadores').add({
+            //     nome: 'marcelo',
+            //     idade: 19,
+            //     funcao: db.doc('/funcao/IOEyQV72LDsQOTmKB0U0'),
+            //     temEquipe: false
+            // });
+
+            // db.collection('jogadores').add({
+            //     nome: 'juãu',
+            //     idade: 29,
+            //     funcao: db.doc('/funcao/IOEyQV72LDsQOTmKB0U0'),
+            //     temEquipe: false
+            // });
+
+            // db.collection('jogadores').add({
+            //     nome: 'Anie',
+            //     idade: 30,
+            //     funcao: db.doc('/funcao/DYZaDBai80ZSoBKnSTzi'),
+            //     temEquipe: false
+            // });
+
+            // db.collection('jogadores').add({
+            //     nome: 'Enzo',
+            //     idade: 29,
+            //     funcao: db.doc('/funcao/DYZaDBai80ZSoBKnSTzi'),
+            //     temEquipe: false
+            // });
+
+            // db.collection('jogadores').add({
+            //     nome: 'Faker',
+            //     idade: 42,
+            //     funcao: db.doc('/funcao/8hde4B1kQTyUvhIOwNMM'),
+            //     temEquipe: false
+            // });
+
+            // db.collection('jogadores').add({
+            //     nome: 'Peanut',
+            //     idade: 90,
+            //     funcao: db.doc('/funcao/8hde4B1kQTyUvhIOwNMM'),
+            //     temEquipe: false
+            // });
+
+            // db.collection('jogadores').add({
+            //     nome: 'Fallen',
+            //     idade: 29,
+            //     funcao: db.doc('/funcao/8hde4B1kQTyUvhIOwNMM'),
+            //     temEquipe: false
+            // });
+
+
+            // db.collection('jogadores').add({
+            //     nome: 'Gabigol',
+            //     idade: 15,
+            //     funcao: db.doc('/funcao/8hde4B1kQTyUvhIOwNMM'),
+            //     temEquipe: false
+            // });
+
+
+            // db.collection('jogadores').add({
+            //     nome: 'Neymar',
+            //     idade: 14,
+            //     funcao: db.doc('/funcao/DYZaDBai80ZSoBKnSTzi'),
+            //     temEquipe: false
+            // });
+
+            // db.collection('jogadores').add({
+            //     nome: 'Renatão',
+            //     idade: 19,
+            //     funcao: db.doc('/funcao/gVBm00tOy7dxLJbeyeZL'),
+            //     temEquipe: false
+            // });
+
+        });
+
+        window.onload = () => {
+            db.collection('funcao').get().then((funcoes) => {
+                funcoes.forEach(funcao => {
+                    let option = document.createElement("option");
+                    option.setAttribute("value", funcao.id);
+                    option.setAttribute("name", funcao.data().nome);
+                    option.innerHTML = funcao.data().nome;
+                    document.getElementById("funcoes").appendChild(option);
+
+                });
+            });
+        };
+    </script>
+</body>
+
+</html>
