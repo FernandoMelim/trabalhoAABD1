@@ -75,8 +75,7 @@
                 "jogadorCinco": "/jogadores/" + document.getElementById("idJogadorCinco").value
             }
 
-            db.collection("equipes").add({
-                nome: nome,
+            db.collection("equipes").doc(nome).set({
                 pais: pais,
                 jogadores: {
                     "jogadorUm": db.doc(jogadores["jogadorUm"]),
@@ -145,10 +144,10 @@
                     for (let i = 0; i < dataList.length; i++) {
                         let option = document.createElement("option");
                         option.setAttribute("value", jogador.id);
-                        option.setAttribute("name", jogador.data().nome);
-                        option.innerHTML = jogador.data().nome;
+                        option.setAttribute("name", jogador.id);
+                        option.innerHTML = jogador.id;
                         jogador.data().funcao.get().then(x => {
-                            option.innerHTML += ' - ' + x.data().nome
+                            option.innerHTML += ' - ' + x.id
                             option.setAttribute("name", option.innerHTML);
                         });
                         dataList[i].appendChild(option);

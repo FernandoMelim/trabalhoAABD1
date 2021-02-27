@@ -29,8 +29,7 @@
             var select = document.getElementById("tipo");
             var tipoDeMapa = select.options[select.selectedIndex].value;
 
-            db.collection('mapas').add({
-                nome: nome,
+            db.collection('mapas').doc(nome).set({
                 tipoDeMapa: db.doc("/tipoDeMapa/" + tipoDeMapa)
             }).then(x => window.location.reload());
         });
@@ -38,13 +37,11 @@
         window.onload = () => {
             db.collection('tipoDeMapa').get().then((tipos) => {
                 tipos.forEach(tipo => {
-                    console.log(tipo.id);
                     let option = document.createElement("option");
                     option.setAttribute("value", tipo.id);
-                    option.setAttribute("name", tipo.data().nome);
-                    option.innerHTML = tipo.data().nome;
+                    option.setAttribute("name", tipo.id);
+                    option.innerHTML = tipo.id;
                     document.getElementById("tipo").appendChild(option);
-
                 });
             });
         };

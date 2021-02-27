@@ -32,143 +32,122 @@
             var select = document.getElementById("funcoes");
             var funcao = select.options[select.selectedIndex].value;
 
-            db.collection('jogadores').add({
-                nome: nome,
+            db.collection('jogadores').doc(nome).set({
                 idade: parseInt(idade),
                 funcao: db.doc("/funcao/" + funcao),
                 temEquipe: false
             }).then(x => window.location.reload());
 
-            // db.collection('jogadores').add({
-            //     nome: "Fernando",
+            // db.collection('jogadores').doc("Fernando").set({
             //     idade: 23,
-            //     funcao: db.doc("/funcao/qr3Xsg5cM4p45qllBoc3"),
+            //     funcao: db.doc("/funcao/Atirador"),
             //     temEquipe: false
             // });
-            // db.collection('jogadores').add({
-            //     nome: "Maria",
+            // db.collection('jogadores').doc("Maria").set({
             //     idade: 40,
-            //     funcao: db.doc("/funcao/qr3Xsg5cM4p45qllBoc3"),
+            //     funcao: db.doc("/funcao/Atirador"),
             //     temEquipe: false
             // });
-            // db.collection('jogadores').add({
-            //     nome: "Luiza",
+            // db.collection('jogadores').doc("Luiza").set({
             //     idade: 18,
-            //     funcao: db.doc('/funcao/qr3Xsg5cM4p45qllBoc3'),
+            //     funcao: db.doc('/funcao/Atirador'),
             //     temEquipe: false
             // });
-            // db.collection('jogadores').add({
-            //     nome: "José",
+            // db.collection('jogadores').doc("José").set({
             //     idade: 27,
-            //     funcao: db.doc('/funcao/qr3Xsg5cM4p45qllBoc3'),
+            //     funcao: db.doc('/funcao/Bruiser'),
             //     temEquipe: false
             // });
-            // db.collection('jogadores').add({
-            //     nome: "kami",
+            // db.collection('jogadores').doc("kami").set({
             //     idade: 15,
-            //     funcao: db.doc('/funcao/qr3Xsg5cM4p45qllBoc3'),
+            //     funcao: db.doc('/funcao/Bruiser'),
             //     temEquipe: false
             // });
-            // db.collection('jogadores').add({
-            //     nome: "brtt",
+            // db.collection('jogadores').doc("brtt").set({
             //     idade: 16,
-            //     funcao: db.doc('/funcao/jGIwMv6Cgjg7pljCBcDM'),
+            //     funcao: db.doc('/funcao/Bruiser'),
             //     temEquipe: false
             // });
-            // db.collection('jogadores').add({
-            //     nome: "Dana",
+            // db.collection('jogadores').doc("Dana").set({
             //     idade: 17,
-            //     funcao: db.doc('/funcao/jGIwMv6Cgjg7pljCBcDM'),
+            //     funcao: db.doc('/funcao/Especialista'),
             //     temEquipe: false
             // });
-            // db.collection('jogadores').add({
-            //     nome: 'manajj',
-            //     idade: '18',
-            //     funcao: db.doc('/funcao/gVBm00tOy7dxLJbeyeZL'),
+            // db.collection('jogadores').doc('manajj').set({
+            //     idade: 18,
+            //     funcao: db.doc('/funcao/Especialista'),
             //     temEquipe: false
             // });
-            // db.collection('jogadores').add({
-            //     nome: 'mylon',
+            // db.collection('jogadores').doc('mylon').set({
             //     idade: 14,
-            //     funcao: db.doc('/funcao/gVBm00tOy7dxLJbeyeZL'),
+            //     funcao: db.doc('/funcao/Especialista'),
             //     temEquipe: false
             // });
-            // db.collection('jogadores').add({
-            //     nome: 'sirT',
+            // db.collection('jogadores').doc('sirT').set({
             //     idade: 14,
-            //     funcao: db.doc('/funcao/IOEyQV72LDsQOTmKB0U0'),
+            //     funcao: db.doc('/funcao/Fighter'),
             //     temEquipe: false
             // });
 
-            // db.collection('jogadores').add({
-            //     nome: 'marcelo',
+            // db.collection('jogadores').doc('marcelo').set({
             //     idade: 19,
-            //     funcao: db.doc('/funcao/IOEyQV72LDsQOTmKB0U0'),
+            //     funcao: db.doc('/funcao/Fighter'),
             //     temEquipe: false
             // });
 
-            // db.collection('jogadores').add({
-            //     nome: 'juãu',
+            // db.collection('jogadores').doc('juãu').set({
             //     idade: 29,
-            //     funcao: db.doc('/funcao/IOEyQV72LDsQOTmKB0U0'),
+            //     funcao: db.doc('/funcao/Fighter'),
             //     temEquipe: false
             // });
 
-            // db.collection('jogadores').add({
-            //     nome: 'Anie',
+            // db.collection('jogadores').doc('Anie').set({
             //     idade: 30,
-            //     funcao: db.doc('/funcao/DYZaDBai80ZSoBKnSTzi'),
+            //     funcao: db.doc('/funcao/Healer'),
             //     temEquipe: false
             // });
 
-            // db.collection('jogadores').add({
-            //     nome: 'Enzo',
+            // db.collection('jogadores').doc('Enzo').set({
             //     idade: 29,
-            //     funcao: db.doc('/funcao/DYZaDBai80ZSoBKnSTzi'),
+            //     funcao: db.doc('/funcao/Healer'),
             //     temEquipe: false
             // });
 
-            // db.collection('jogadores').add({
-            //     nome: 'Faker',
+            // db.collection('jogadores').doc('Faker').set({
             //     idade: 42,
-            //     funcao: db.doc('/funcao/8hde4B1kQTyUvhIOwNMM'),
+            //     funcao: db.doc('/funcao/Healer'),
             //     temEquipe: false
             // });
 
-            // db.collection('jogadores').add({
-            //     nome: 'Peanut',
+            // db.collection('jogadores').doc('Peanut').set({
             //     idade: 90,
-            //     funcao: db.doc('/funcao/8hde4B1kQTyUvhIOwNMM'),
+            //     funcao: db.doc('/funcao/Suporte'),
             //     temEquipe: false
             // });
 
-            // db.collection('jogadores').add({
-            //     nome: 'Fallen',
+            // db.collection('jogadores').doc('Fallen').set({
             //     idade: 29,
-            //     funcao: db.doc('/funcao/8hde4B1kQTyUvhIOwNMM'),
+            //     funcao: db.doc('/funcao/Suporte'),
             //     temEquipe: false
             // });
 
 
-            // db.collection('jogadores').add({
-            //     nome: 'Gabigol',
+            // db.collection('jogadores').doc('Gabigol').set({
             //     idade: 15,
-            //     funcao: db.doc('/funcao/8hde4B1kQTyUvhIOwNMM'),
+            //     funcao: db.doc('/funcao/Suporte'),
             //     temEquipe: false
             // });
 
 
-            // db.collection('jogadores').add({
-            //     nome: 'Neymar',
+            // db.collection('jogadores').doc('Neymar').set({
             //     idade: 14,
-            //     funcao: db.doc('/funcao/DYZaDBai80ZSoBKnSTzi'),
+            //     funcao: db.doc('/funcao/Tank'),
             //     temEquipe: false
             // });
 
-            // db.collection('jogadores').add({
-            //     nome: 'Renatão',
+            // db.collection('jogadores').doc('Renatão').set({
             //     idade: 19,
-            //     funcao: db.doc('/funcao/gVBm00tOy7dxLJbeyeZL'),
+            //     funcao: db.doc('/funcao/Tank'),
             //     temEquipe: false
             // });
 
@@ -179,8 +158,8 @@
                 funcoes.forEach(funcao => {
                     let option = document.createElement("option");
                     option.setAttribute("value", funcao.id);
-                    option.setAttribute("name", funcao.data().nome);
-                    option.innerHTML = funcao.data().nome;
+                    option.setAttribute("name", funcao.id);
+                    option.innerHTML = funcao.id;
                     document.getElementById("funcoes").appendChild(option);
 
                 });

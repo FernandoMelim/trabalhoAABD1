@@ -13,19 +13,21 @@
     <div>
         <h1>Criar tipo de mapa</h1>
         <label for="tipo">Tipo de mapa: </label> <input type="text" id="tipo" style="width: 250px;" /><br><br>
-        <button id="criarTipoDeMapa">Criar função</button>
+        <label for="bonus">Bonus do mapa: </label> <input type="text" id="bonus" style="width: 250px;" /><br><br>
+        <button id="criarTipoDeMapa">Criar tipo de mapa</button>
     </div>
     <script src="DB.js"></script>
     <script>
         document.getElementById("criarTipoDeMapa").addEventListener("click", function () {
-            var tipo = document.getElementById("tipo").value;
             document.getElementById("criarTipoDeMapa").setAttribute("disabled", true);
+            var tipo = document.getElementById("tipo").value;
+            var bonus = document.getElementById("bonus").value;
 
-            db.collection('tipoDeMapa').add({
-                nome: tipo,
-            }).then(x => { 
+            db.collection('tipoDeMapa').doc(tipo).set({
+                bonus: bonus
+            }).then(x => {
                 window.location.reload();
-             });
+            });
         });
 
     </script>

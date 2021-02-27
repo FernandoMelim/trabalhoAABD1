@@ -130,14 +130,14 @@
                 equipes.forEach(equipe => {
                     let optionUm = document.createElement("option");
                     optionUm.setAttribute("value", equipe.id);
-                    optionUm.setAttribute("name", equipe.data().nome);
-                    optionUm.innerHTML = equipe.data().nome + ' - ' + equipe.data().pais;
+                    optionUm.setAttribute("name", equipe.id);
+                    optionUm.innerHTML = equipe.id + ' - ' + equipe.data().pais;
                     document.getElementById("timeUm").appendChild(optionUm);
 
                     let optionDois = document.createElement("option");
                     optionDois.setAttribute("value", equipe.id);
-                    optionDois.setAttribute("name", equipe.data().nome);
-                    optionDois.innerHTML = equipe.data().nome + ' - ' + equipe.data().pais;
+                    optionDois.setAttribute("name", equipe.id);
+                    optionDois.innerHTML = equipe.id + ' - ' + equipe.data().pais;
 
                     document.getElementById("timeUm").appendChild(optionUm);
                     document.getElementById("timeDois").appendChild(optionDois);
@@ -148,10 +148,10 @@
                 mapas.forEach(mapa => {
                     let option = document.createElement("option");
                     option.setAttribute("value", mapa.id);
-                    option.setAttribute("name", mapa.data().nome);
-                    option.innerHTML = mapa.data().nome;
+                    option.setAttribute("name", mapa.id);
+                    option.innerHTML = mapa.id;
                     mapa.data().tipoDeMapa.get().then(x => {
-                        option.innerHTML += ' - ' + x.data().nome
+                        option.innerHTML += ' - ' + x.id
                     });
                     document.getElementById("mapa").appendChild(option);
                 });

@@ -13,6 +13,7 @@
     <div>
         <h1>Criar função</h1>
         <label for="nome">Função: </label> <input type="text" id="nome" style="width: 250px;" /><br><br>
+        <label for="habilidade">Habilidade: </label> <input type="text" id="habilidade" style="width: 250px;" /><br><br>
         <button id="criarFuncao">Criar função</button>
     </div>
     <script src="DB.js"></script>
@@ -20,9 +21,10 @@
         document.getElementById("criarFuncao").addEventListener("click", function () {
             document.getElementById("criarFuncao").setAttribute("disabled", true);
             var nome = document.getElementById("nome").value;
+            var habilidade = document.getElementById("habilidade").value;
 
-            db.collection('funcao').add({
-                nome: nome,
+            db.collection('funcao').doc(nome).set({
+                habilidade: habilidade
             }).then(x => window.location.reload());
         });
     </script>
