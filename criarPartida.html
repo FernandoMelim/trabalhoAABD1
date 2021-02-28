@@ -67,7 +67,7 @@
                 },
                 mapa: db.doc("/mapas/" + mapa),
                 vencedor: db.doc("/equipes/" + vencedor),
-                duracao: duracao,
+                duracao: parseInt(duracao),
                 placar: placar,
             }).then(x => window.location.reload());
         });
